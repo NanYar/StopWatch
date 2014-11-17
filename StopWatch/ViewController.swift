@@ -8,18 +8,56 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController
+{
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    var timer = NSTimer()
+    var count = 0
+    var isStartBarButtonPressed = false
+    
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
 
+    @IBAction func startBarButtonPressed(sender: UIBarButtonItem)
+    {
+        if !self.isStartBarButtonPressed
+        {
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "result", userInfo: nil, repeats: true)
+        }
+        isStartBarButtonPressed = true
+        
+    }
+    @IBAction func pauseBarButtonPressed(sender: UIBarButtonItem)
+    {
+        self.timer.invalidate()
+        self.isStartBarButtonPressed = false
+    }
+    @IBAction func resetBarButtonPressed(sender: UIBarButtonItem)
+    {
+        self.timer.invalidate()
+        self.timeLabel.text = "0"
+        self.count = 0
+        self.isStartBarButtonPressed = false
+    }
+    
+    
+    
+    // Helper Functions
+    
+    func result()
+    {
+        self.count++
+        self.timeLabel.text = String(count)
+    }
 
 }
-
